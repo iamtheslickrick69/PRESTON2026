@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -16,14 +18,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const navigation = [
-  { name: "Dashboard", href: "/provider/dashboard", icon: Activity },
-  { name: "My Patients", href: "/provider/patients", icon: Users },
-  { name: "Schedule", href: "/provider/schedule", icon: Calendar },
-  { name: "Peptide Library", href: "/provider/peptides", icon: ShoppingCart },
-  { name: "Dosing Guide", href: "/provider/dosing-guide", icon: BookOpen },
-]
-
 export default function NewPatientPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -38,7 +32,7 @@ export default function NewPatientPage() {
 
   return (
     <ProtectedRoute allowedRoles={["provider", "clinic_admin"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div className="flex items-center gap-4">
             <Link href="/provider/patients">

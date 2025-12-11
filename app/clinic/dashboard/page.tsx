@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -7,20 +9,10 @@ import { Building2, Users, UserCog, Activity, DollarSign, ShoppingCart, Trending
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-const navigation = [
-  { name: "Dashboard", href: "/clinic/dashboard", icon: Activity },
-  { name: "Providers", href: "/clinic/providers", icon: UserCog },
-  { name: "Patients", href: "/clinic/patients", icon: Users },
-  { name: "Analytics", href: "/clinic/analytics", icon: TrendingUp },
-  { name: "Billing", href: "/clinic/billing", icon: DollarSign },
-  { name: "Reports", href: "/clinic/reports", icon: BarChart },
-  { name: "Settings", href: "/clinic/settings", icon: Building2 },
-]
-
 export default function ClinicDashboardPage() {
   return (
     <ProtectedRoute allowedRoles={["clinic_admin"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Clinic Dashboard</h2>

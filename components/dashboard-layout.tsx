@@ -4,25 +4,88 @@ import type { LucideIcon } from "lucide-react"
 import React from "react"
 import { useAuth } from "@/lib/auth-context"
 import { Button } from "@/components/ui/button"
-import { LogOut, Menu, HomeIcon, ChevronRight } from "lucide-react"
+import {
+  LogOut,
+  Menu,
+  HomeIcon,
+  ChevronRight,
+  Building2,
+  Users,
+  UserCog,
+  Activity,
+  DollarSign,
+  TrendingUp,
+  Settings,
+  BarChart,
+  Calendar,
+  ShoppingCart,
+  BookOpen,
+  Calculator,
+  FileText,
+  Home,
+  Package,
+  Phone,
+} from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Image from "next/image"
 
+// Define navigation for each portal type
+const clinicNavigation = [
+  { name: "Dashboard", href: "/clinic/dashboard", icon: Building2 },
+  { name: "Patients", href: "/clinic/patients", icon: Users },
+  { name: "Providers", href: "/clinic/providers", icon: UserCog },
+  { name: "Analytics", href: "/clinic/analytics", icon: Activity },
+  { name: "Billing", href: "/clinic/billing", icon: DollarSign },
+  { name: "Reports", href: "/clinic/reports", icon: TrendingUp },
+  { name: "Settings", href: "/clinic/settings", icon: Settings },
+]
+
+const providerNavigation = [
+  { name: "Dashboard", href: "/provider/dashboard", icon: Activity },
+  { name: "My Patients", href: "/provider/patients", icon: Users },
+  { name: "Schedule", href: "/provider/schedule", icon: Calendar },
+  { name: "Peptide Library", href: "/provider/peptides", icon: ShoppingCart },
+  { name: "Dosing Guide", href: "/provider/dosing-guide", icon: BookOpen },
+  { name: "Calculator", href: "/provider/calculator", icon: Calculator },
+  { name: "Resources", href: "/provider/resources", icon: FileText },
+  { name: "Reports", href: "/provider/reports", icon: BarChart },
+]
+
+const patientNavigation = [
+  { name: "Dashboard", href: "/patient/dashboard", icon: Home },
+  { name: "My Peptides", href: "/patient/peptides", icon: Package },
+  { name: "Shop", href: "/patient/shop", icon: ShoppingCart },
+  { name: "Schedule", href: "/patient/schedule", icon: Calendar },
+  { name: "Calculator", href: "/patient/calculator", icon: Calculator },
+  { name: "Resources", href: "/patient/resources", icon: BookOpen },
+  { name: "Emergency", href: "/patient/emergency", icon: Phone },
+]
+
 interface DashboardLayoutProps {
   children: React.ReactNode
-  navigation: Array<{
+  navigation?: Array<{
     name: string
     href: string
     icon: LucideIcon
   }>
 }
 
-export function DashboardLayout({ children, navigation }: DashboardLayoutProps) {
+export function DashboardLayout({ children, navigation: propNavigation }: DashboardLayoutProps) {
   const { user, logout } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
+
+  // Determine navigation based on pathname if not provided
+  const getNavigation = () => {
+    if (propNavigation) return propNavigation
+    if (pathname.startsWith("/clinic")) return clinicNavigation
+    if (pathname.startsWith("/provider")) return providerNavigation
+    if (pathname.startsWith("/patient")) return patientNavigation
+    return patientNavigation // default
+  }
+  const navigation = getNavigation()
 
   const generateBreadcrumbs = () => {
     const segments = pathname.split("/").filter(Boolean)

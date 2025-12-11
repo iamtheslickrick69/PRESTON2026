@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import type React from "react"
 
 import { ProtectedRoute } from "@/components/protected-route"
@@ -14,15 +16,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-
-const navigation = [
-  { name: "Dashboard", href: "/clinic/dashboard", icon: Activity },
-  { name: "Providers", href: "/clinic/providers", icon: UserCog },
-  { name: "Patients", href: "/clinic/patients", icon: Users },
-  { name: "Analytics", href: "/clinic/analytics", icon: TrendingUp },
-  { name: "Billing", href: "/clinic/billing", icon: DollarSign },
-  { name: "Settings", href: "/clinic/settings", icon: Building2 },
-]
 
 export default function NewProviderPage() {
   const router = useRouter()
@@ -42,7 +35,7 @@ export default function NewProviderPage() {
 
   return (
     <ProtectedRoute allowedRoles={["clinic_admin"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div className="flex items-center gap-4">
             <Link href="/clinic/providers">

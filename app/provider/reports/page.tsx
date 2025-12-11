@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -35,17 +37,6 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts"
-
-const navigation = [
-  { name: "Dashboard", href: "/provider/dashboard", icon: Activity },
-  { name: "My Patients", href: "/provider/patients", icon: Users },
-  { name: "Schedule", href: "/provider/schedule", icon: Calendar },
-  { name: "Peptide Library", href: "/provider/peptides", icon: ShoppingCart },
-  { name: "Dosing Guide", href: "/provider/dosing-guide", icon: BookOpen },
-  { name: "Calculator", href: "/provider/calculator", icon: Calculator },
-  { name: "Resources", href: "/provider/resources", icon: FileText },
-  { name: "Reports", href: "/provider/reports", icon: BarChart },
-]
 
 // Sample data for different report types
 const myPatientsData = [
@@ -200,7 +191,7 @@ export default function ProviderReportsPage() {
 
   return (
     <ProtectedRoute allowedRoles={["provider"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Reports</h2>

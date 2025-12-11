@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,13 +24,6 @@ import {
   ResponsiveContainer,
 } from "recharts"
 import { LayoutDashboardIcon, UsersIcon, SettingsIcon, BarChart3Icon } from "lucide-react"
-
-const navigation = [
-  { name: "Dashboard", href: "/clinic/dashboard", icon: LayoutDashboardIcon },
-  { name: "Providers", href: "/clinic/providers", icon: UsersIcon },
-  { name: "Analytics", href: "/clinic/analytics", icon: BarChart3Icon },
-  { name: "Settings", href: "/clinic/settings", icon: SettingsIcon },
-]
 
 const peptideOrderData = [
   { name: "Semaglutide", orders: 145, revenue: 21750 },
@@ -79,7 +74,7 @@ const COLORS = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981", "#06b6d4"
 export default function AnalyticsPage() {
   return (
     <ProtectedRoute allowedRoles={["clinic_admin"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Analytics & Reporting</h2>

@@ -1,26 +1,20 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Activity, Calendar, ShoppingCart, ArrowLeft, AlertTriangle, BookOpen } from "lucide-react"
+import { Users, Activity, Calendar, ShoppingCart, ArrowLeft, AlertTriangle, BookOpen, Package, Building2, FileText, CalendarClock, Thermometer, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
-const navigation = [
-  { name: "Dashboard", href: "/provider/dashboard", icon: Activity },
-  { name: "My Patients", href: "/provider/patients", icon: Users },
-  { name: "Schedule", href: "/provider/schedule", icon: Calendar },
-  { name: "Peptide Library", href: "/provider/peptides", icon: ShoppingCart },
-  { name: "Dosing Guide", href: "/provider/dosing-guide", icon: BookOpen },
-]
-
 export default function PeptideDetailPage() {
   return (
     <ProtectedRoute allowedRoles={["provider", "clinic_admin"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -60,6 +54,7 @@ export default function PeptideDetailPage() {
               <TabsTrigger value="dosing">Dosing Guidelines</TabsTrigger>
               <TabsTrigger value="reconstitution">Reconstitution</TabsTrigger>
               <TabsTrigger value="safety">Safety & Side Effects</TabsTrigger>
+              <TabsTrigger value="inventory">Inventory & Batch</TabsTrigger>
               <TabsTrigger value="research">Research</TabsTrigger>
             </TabsList>
 
@@ -418,6 +413,230 @@ export default function PeptideDetailPage() {
                     <li>• Reassess need for continued therapy at 6-8 weeks</li>
                     <li>• No routine lab monitoring typically required</li>
                   </ul>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Inventory & Batch Tracking */}
+            <TabsContent value="inventory" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Supplier Information</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center gap-4 p-4 border rounded-lg">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <Building2 className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">Alpha BioMed (Paramount)</p>
+                      <p className="text-sm text-muted-foreground">Primary Peptide Supplier</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Badge variant="secondary" className="text-xs">Verified</Badge>
+                        <Badge variant="outline" className="text-xs">RUO Certified</Badge>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Current Inventory Batches</CardTitle>
+                  <CardDescription>Available lots for this product</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* Batch 1 */}
+                    <div className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Package className="w-4 h-4 text-muted-foreground" />
+                          <span className="font-semibold">LOT-2024-0163</span>
+                        </div>
+                        <Badge className="bg-green-100 text-green-800">In Stock</Badge>
+                      </div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                          <p className="text-muted-foreground">Quantity</p>
+                          <p className="font-medium">24 vials</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Manufactured</p>
+                          <p className="font-medium">2024-01-15</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Expiration</p>
+                          <p className="font-medium">2025-08-10</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Purity</p>
+                          <p className="font-medium">99.2%</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 pt-2 border-t">
+                        <div className="flex items-center gap-2 text-sm">
+                          <Thermometer className="w-4 h-4 text-muted-foreground" />
+                          <span>Storage: 2-8°C</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span>Quality verified</span>
+                        </div>
+                        <Button variant="link" size="sm" className="ml-auto">
+                          <FileText className="w-4 h-4 mr-1" />
+                          View COA
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Batch 2 */}
+                    <div className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Package className="w-4 h-4 text-muted-foreground" />
+                          <span className="font-semibold">LOT-2024-0142</span>
+                        </div>
+                        <Badge variant="secondary">Low Stock</Badge>
+                      </div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                          <p className="text-muted-foreground">Quantity</p>
+                          <p className="font-medium">6 vials</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Manufactured</p>
+                          <p className="font-medium">2024-01-02</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Expiration</p>
+                          <p className="font-medium">2025-06-15</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Purity</p>
+                          <p className="font-medium">99.1%</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 pt-2 border-t">
+                        <div className="flex items-center gap-2 text-sm">
+                          <Thermometer className="w-4 h-4 text-muted-foreground" />
+                          <span>Storage: 2-8°C</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span>Quality verified</span>
+                        </div>
+                        <Button variant="link" size="sm" className="ml-auto">
+                          <FileText className="w-4 h-4 mr-1" />
+                          View COA
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Batch 3 - Expired */}
+                    <div className="border rounded-lg p-4 space-y-3 opacity-60">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Package className="w-4 h-4 text-muted-foreground" />
+                          <span className="font-semibold">LOT-2023-0892</span>
+                        </div>
+                        <Badge variant="destructive">Expired</Badge>
+                      </div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                          <p className="text-muted-foreground">Quantity</p>
+                          <p className="font-medium">0 vials</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Manufactured</p>
+                          <p className="font-medium">2023-06-20</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Expiration</p>
+                          <p className="font-medium text-red-600">2024-01-01</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">Purity</p>
+                          <p className="font-medium">99.0%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Quality Certificates</CardTitle>
+                  <CardDescription>Certificate of Analysis (COA) documents</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="font-medium">COA - LOT-2024-0163</p>
+                          <p className="text-xs text-muted-foreground">Uploaded Jan 15, 2024</p>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm">Download</Button>
+                    </div>
+                    <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="font-medium">COA - LOT-2024-0142</p>
+                          <p className="text-xs text-muted-foreground">Uploaded Jan 2, 2024</p>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm">Download</Button>
+                    </div>
+                    <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-primary" />
+                        <div>
+                          <p className="font-medium">Third-Party Testing Report</p>
+                          <p className="text-xs text-muted-foreground">Independent verification - Dec 2023</p>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm">Download</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Storage & Handling Guidelines</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="p-4 bg-blue-50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Thermometer className="w-5 h-5 text-blue-600" />
+                        <p className="font-semibold text-blue-800">Before Reconstitution</p>
+                      </div>
+                      <ul className="text-sm text-blue-700 space-y-1">
+                        <li>• Store at 2-8°C (refrigerator)</li>
+                        <li>• Protect from light</li>
+                        <li>• Stable for up to 18 months</li>
+                        <li>• Do not freeze lyophilized powder</li>
+                      </ul>
+                    </div>
+                    <div className="p-4 bg-amber-50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CalendarClock className="w-5 h-5 text-amber-600" />
+                        <p className="font-semibold text-amber-800">After Reconstitution</p>
+                      </div>
+                      <ul className="text-sm text-amber-700 space-y-1">
+                        <li>• Store at 2-8°C (refrigerator)</li>
+                        <li>• Use within 30 days</li>
+                        <li>• Do not freeze reconstituted solution</li>
+                        <li>• Avoid repeated freeze-thaw cycles</li>
+                      </ul>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>

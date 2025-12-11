@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -17,15 +19,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-const navigation = [
-  { name: "Dashboard", href: "/patient/dashboard", icon: Home },
-  { name: "Shop Peptides", href: "/patient/shop", icon: ShoppingBag },
-  { name: "My Schedule", href: "/patient/schedule", icon: Calendar },
-  { name: "Calculator", href: "/patient/calculator", icon: Calculator },
-  { name: "Resources", href: "/patient/resources", icon: BookOpen },
-  { name: "Emergency", href: "/patient/emergency", icon: Phone },
-]
-
 export default function EmergencyPage() {
   const handleEmergencyCall = () => {
     alert("Connecting you to your provider via telemedicine...")
@@ -37,7 +30,7 @@ export default function EmergencyPage() {
 
   return (
     <ProtectedRoute allowedRoles={["patient"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Emergency Contact</h2>

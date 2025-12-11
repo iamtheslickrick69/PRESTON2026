@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -23,17 +25,6 @@ import {
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
-const navigation = [
-  { name: "Dashboard", href: "/patient/dashboard", icon: Home },
-  { name: "My Peptides", href: "/patient/shop", icon: ShoppingCart },
-  { name: "Orders", href: "/patient/orders", icon: Package },
-  { name: "Shop", href: "/patient/peptides", icon: Activity },
-  { name: "Calculator", href: "/patient/calculator", icon: Calculator },
-  { name: "Schedule", href: "/patient/schedule", icon: Calendar },
-  { name: "Resources", href: "/patient/resources", icon: BookOpen },
-  { name: "Emergency", href: "/patient/emergency", icon: Phone },
-]
-
 export default function CartPage() {
   const router = useRouter()
   const [isProcessing, setIsProcessing] = useState(false)
@@ -49,17 +40,13 @@ export default function CartPage() {
   const tax = subtotal * 0.08
   const total = subtotal + shipping + tax
 
-  const handleCheckout = async () => {
-    setIsProcessing(true)
-    // Simulate payment processing
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    alert("Order placed successfully!")
-    router.push("/patient/orders")
+  const handleCheckout = () => {
+    router.push("/patient/shop/checkout")
   }
 
   return (
     <ProtectedRoute allowedRoles={["patient"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
@@ -181,15 +168,9 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <Button className="w-full" size="lg" onClick={handleCheckout} disabled={isProcessing}>
-                  {isProcessing ? (
-                    "Processing..."
-                  ) : (
-                    <>
-                      <CreditCard className="w-4 h-4 mr-2" />
-                      Complete Purchase
-                    </>
-                  )}
+                <Button className="w-full" size="lg" onClick={handleCheckout}>
+                  <CreditCard className="w-4 h-4 mr-2" />
+                  Proceed to Checkout
                 </Button>
 
                 <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">

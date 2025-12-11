@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,11 +17,14 @@ import {
   Clock,
   Package,
   AlertCircle,
+  AlertTriangle,
   CheckCircle,
   Home,
   Calculator,
   BookOpen,
   Phone,
+  MessageSquare,
+  Beaker,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -91,21 +96,10 @@ const healthMetrics = [
   { label: "Sleep Quality", value: "7.5/10", change: "+1.5", trend: "up" },
 ]
 
-const navigation = [
-  { name: "Dashboard", href: "/patient/dashboard", icon: Home },
-  { name: "My Peptides", href: "/patient/shop", icon: ShoppingCart },
-  { name: "Orders", href: "/patient/orders", icon: Package },
-  { name: "Shop", href: "/patient/peptides", icon: Activity },
-  { name: "Calculator", href: "/patient/calculator", icon: Calculator },
-  { name: "Schedule", href: "/patient/schedule", icon: Calendar },
-  { name: "Resources", href: "/patient/resources", icon: BookOpen },
-  { name: "Emergency", href: "/patient/emergency", icon: Phone },
-]
-
 export default function PatientDashboardPage() {
   return (
     <ProtectedRoute allowedRoles={["patient"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-8">
           {/* Quick Stats */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -319,10 +313,12 @@ export default function PatientDashboardPage() {
                     <FileText className="w-4 h-4 mr-2" />
                     View Medical Records
                   </Button>
-                  <Button variant="outline" className="w-full justify-start bg-transparent">
-                    <Activity className="w-4 h-4 mr-2" />
-                    Log Symptoms
-                  </Button>
+                  <Link href="/patient/report-event">
+                    <Button variant="outline" className="w-full justify-start bg-transparent">
+                      <AlertTriangle className="w-4 h-4 mr-2" />
+                      Report Side Effect
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
 

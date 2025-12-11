@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -18,15 +20,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-
-const navigation = [
-  { name: "Dashboard", href: "/clinic/dashboard", icon: Activity },
-  { name: "Providers", href: "/clinic/providers", icon: UserCog },
-  { name: "Patients", href: "/clinic/patients", icon: Users },
-  { name: "Analytics", href: "/clinic/analytics", icon: TrendingUp },
-  { name: "Billing", href: "/clinic/billing", icon: DollarSign },
-  { name: "Settings", href: "/clinic/settings", icon: Building2 },
-]
 
 // Mock data for recent transactions
 const recentTransactions = [
@@ -75,7 +68,7 @@ const recentTransactions = [
 export default function ClinicBillingPage() {
   return (
     <ProtectedRoute allowedRoles={["clinic_admin"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>

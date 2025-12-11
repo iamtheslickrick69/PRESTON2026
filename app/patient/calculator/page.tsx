@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,17 +10,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-
-const navigation = [
-  { name: "Dashboard", href: "/patient/dashboard", icon: Home },
-  { name: "My Peptides", href: "/patient/peptides", icon: Activity },
-  { name: "Orders", href: "/patient/orders", icon: Package },
-  { name: "Shop", href: "/patient/shop", icon: ShoppingCart },
-  { name: "Calculator", href: "/patient/calculator", icon: Calculator },
-  { name: "Schedule", href: "/patient/schedule", icon: Calendar },
-  { name: "Resources", href: "/patient/resources", icon: BookOpen },
-  { name: "Emergency", href: "/patient/emergency", icon: Phone },
-]
 
 const doseOptions = [0.1, 0.25, 0.5, 1, 2, 2.5, 5, 7.5, 10, 12.5, 15, 20]
 const strengthOptions = [1, 2, 5, 6, 10, 12, 15, 20, 24, 30, 50, 60]
@@ -80,7 +71,7 @@ export default function CalculatorPage() {
 
   return (
     <ProtectedRoute allowedRoles={["patient"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-8">
           <div className="text-center">
             <h2 className="text-4xl font-bold tracking-tight text-primary">Peptide Calculator</h2>

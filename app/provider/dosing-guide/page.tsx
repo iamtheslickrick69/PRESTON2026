@@ -1,23 +1,17 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Activity, Users, Calendar, ShoppingCart, BookOpen, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const navigation = [
-  { name: "Dashboard", href: "/provider/dashboard", icon: Activity },
-  { name: "My Patients", href: "/provider/patients", icon: Users },
-  { name: "Schedule", href: "/provider/schedule", icon: Calendar },
-  { name: "Peptide Library", href: "/provider/peptides", icon: ShoppingCart },
-  { name: "Dosing Guide", href: "/provider/dosing-guide", icon: BookOpen },
-]
-
 export default function DosingGuidePage() {
   return (
     <ProtectedRoute allowedRoles={["provider"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-6">
           <div className="space-y-4">
             <div>

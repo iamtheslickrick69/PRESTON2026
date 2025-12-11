@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -68,17 +70,6 @@ const accessories = [
   },
 ]
 
-const navigation = [
-  { name: "Dashboard", href: "/patient/dashboard", icon: Home },
-  { name: "My Peptides", href: "/patient/shop", icon: ShoppingCart },
-  { name: "Orders", href: "/patient/orders", icon: Package },
-  { name: "Shop", href: "/patient/peptides", icon: Activity },
-  { name: "Calculator", href: "/patient/calculator", icon: Calculator },
-  { name: "Schedule", href: "/patient/schedule", icon: Calendar },
-  { name: "Resources", href: "/patient/resources", icon: BookOpen },
-  { name: "Emergency", href: "/patient/emergency", icon: Phone },
-]
-
 export default function PatientShopPage() {
   const [cart, setCart] = useState<Record<string, number>>({})
 
@@ -109,7 +100,7 @@ export default function PatientShopPage() {
 
   return (
     <ProtectedRoute allowedRoles={["patient"]}>
-      <DashboardLayout navigation={navigation}>
+      <DashboardLayout>
         <div className="space-y-8">
           {/* Prescribed Peptides */}
           <div>
