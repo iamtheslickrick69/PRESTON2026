@@ -127,27 +127,51 @@ export function DashboardLayout({ children, navigation: propNavigation }: Dashbo
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+      {/* Header with horizontal navigation */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/bridgeicon.png"
+              alt="Bridge MDX"
+              width={198}
+              height={40}
+              className="h-[37px] w-auto cursor-pointer hover:opacity-80 transition-opacity"
+              priority
+            />
+          </Link>
+
+          {/* Horizontal Navigation - Desktop */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navigation.map((item) => {
+              const Icon = item.icon
+              const isActive = pathname === item.href
+              return (
+                <Link key={item.name} href={item.href}>
+                  <Button
+                    variant={isActive ? "secondary" : "ghost"}
+                    className="gap-2"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.name}
+                  </Button>
+                </Link>
+              )
+            })}
+          </nav>
+
+          {/* User info and logout */}
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
               <Menu className="h-5 w-5" />
             </Button>
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/bridgeicon.png"
-                alt="Bridge MDX"
-                width={198}
-                height={40}
-                className="h-[37px] w-auto cursor-pointer hover:opacity-80 transition-opacity"
-                priority
-              />
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="text-sm">
+            <div className="hidden sm:block text-sm text-right">
               <p className="font-medium">{user?.name}</p>
               <p className="text-muted-foreground text-xs">{user?.email}</p>
             </div>
@@ -158,21 +182,50 @@ export function DashboardLayout({ children, navigation: propNavigation }: Dashbo
         </div>
       </header>
 
-      <div className="flex">
-        {/* Sidebar */}
-        <aside
-          className={`
-          fixed md:sticky top-16 left-0 z-40 h-[calc(100vh-4rem)] w-64 border-r bg-background
-          transition-transform duration-200 ease-in-out
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
-        `}
-        >
-          <nav className="flex flex-col gap-2 p-4">
+      {/* Main Content - Full Width */}
+      <main className="container p-6">
+        <nav aria-label="breadcrumb" className="mb-6">
+          <ol className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={crumb.href}>
+                <li className="inline-flex items-center gap-2">
+                  {index === breadcrumbs.length - 1 ? (
+                    <span className="font-medium text-foreground">{crumb.label}</span>
+                  ) : (
+                    <Link
+                      href={crumb.href}
+                      className="transition-colors hover:text-foreground flex items-center gap-1"
+                    >
+                      {index === 0 && <HomeIcon className="h-4 w-4" />}
+                      {index === 0 ? "" : crumb.label}
+                    </Link>
+                  )}
+                </li>
+                {index < breadcrumbs.length - 1 && (
+                  <li role="presentation" aria-hidden="true">
+                    <ChevronRight className="h-4 w-4" />
+                  </li>
+                )}
+              </React.Fragment>
+            ))}
+          </ol>
+        </nav>
+        {children}
+      </main>
+
+      {/* Mobile Navigation Dropdown */}
+      {sidebarOpen && (
+        <div className="md:hidden fixed inset-0 top-16 z-40 bg-background">
+          <nav className="flex flex-col gap-2 p-4 border-b">
             {navigation.map((item) => {
               const Icon = item.icon
+              const isActive = pathname === item.href
               return (
-                <Link key={item.name} href={item.href}>
-                  <Button variant="ghost" className="w-full justify-start gap-2">
+                <Link key={item.name} href={item.href} onClick={() => setSidebarOpen(false)}>
+                  <Button
+                    variant={isActive ? "secondary" : "ghost"}
+                    className="w-full justify-start gap-2"
+                  >
                     <Icon className="h-4 w-4" />
                     {item.name}
                   </Button>
@@ -180,46 +233,11 @@ export function DashboardLayout({ children, navigation: propNavigation }: Dashbo
               )
             })}
           </nav>
-        </aside>
-
-        {/* Main Content */}
-        <main className="flex-1 p-6">
-          <nav aria-label="breadcrumb" className="mb-6">
-            <ol className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-              {breadcrumbs.map((crumb, index) => (
-                <React.Fragment key={crumb.href}>
-                  <li className="inline-flex items-center gap-2">
-                    {index === breadcrumbs.length - 1 ? (
-                      <span className="font-medium text-foreground">{crumb.label}</span>
-                    ) : (
-                      <Link
-                        href={crumb.href}
-                        className="transition-colors hover:text-foreground flex items-center gap-1"
-                      >
-                        {index === 0 && <HomeIcon className="h-4 w-4" />}
-                        {index === 0 ? "" : crumb.label}
-                      </Link>
-                    )}
-                  </li>
-                  {index < breadcrumbs.length - 1 && (
-                    <li role="presentation" aria-hidden="true">
-                      <ChevronRight className="h-4 w-4" />
-                    </li>
-                  )}
-                </React.Fragment>
-              ))}
-            </ol>
-          </nav>
-          {children}
-        </main>
-      </div>
-
-      {/* Mobile sidebar overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
+          <div
+            className="absolute inset-0 top-full bg-background/80 backdrop-blur-sm"
+            onClick={() => setSidebarOpen(false)}
+          />
+        </div>
       )}
     </div>
   )

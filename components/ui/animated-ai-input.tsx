@@ -41,7 +41,7 @@ const roleConfigs: RoleConfig[] = [
     bgColor: "bg-gray-600",
     borderColor: "border-gray-500/30",
     placeholder: "Ask Atlas about clinic operations, analytics, or compliance...",
-    prompts: ["📊 How's my clinic performing this quarter?", "👥 Show me provider scheduling gaps", "✅ Check our HIPAA compliance status"]
+    prompts: ["How's my clinic performing this quarter?", "Show me provider scheduling gaps", "Check our HIPAA compliance status"]
   },
   {
     id: "provider",
@@ -52,7 +52,7 @@ const roleConfigs: RoleConfig[] = [
     bgColor: "bg-blue-500",
     borderColor: "border-blue-500/30",
     placeholder: "Ask Atlas about protocols, dosing, or patient care...",
-    prompts: ["💊 What's the best BPC-157 protocol?", "⚗️ Compare GH peptide options for me", "⚠️ Any interactions with semaglutide?"]
+    prompts: ["What's the best BPC-157 protocol?", "Compare GH peptide options for me", "Any interactions with semaglutide?"]
   },
   {
     id: "patient",
@@ -63,7 +63,7 @@ const roleConfigs: RoleConfig[] = [
     bgColor: "bg-red-500",
     borderColor: "border-red-500/30",
     placeholder: "Ask Atlas about your treatment, side effects, or next steps...",
-    prompts: ["💉 How do I inject safely?", "🩺 What does BPC-157 actually do?", "⚠️ What side effects should I watch for?"]
+    prompts: ["How do I inject safely?", "What does BPC-157 actually do?", "What side effects should I watch for?"]
   },
 ]
 
@@ -97,26 +97,26 @@ function TypingIndicator({ color }: { color: string }) {
 function QuickActionButtons({ roleId, onAction }: { roleId: RoleType; onAction: (action: string) => void }) {
   const actions = {
     clinic: [
-      { label: "📈 Show trends", value: "Show me detailed trends and analytics" },
-      { label: "💡 Suggestions", value: "What are your suggestions based on this?" },
+      { label: "Show trends", value: "Show me detailed trends and analytics" },
+      { label: "Suggestions", value: "What are your suggestions based on this?" },
     ],
     provider: [
-      { label: "📋 Protocol details", value: "Give me the full protocol details" },
-      { label: "💊 Dosing calculator", value: "Help me calculate the right dosage" },
+      { label: "Protocol details", value: "Give me the full protocol details" },
+      { label: "Dosing calculator", value: "Help me calculate the right dosage" },
     ],
     patient: [
-      { label: "📚 Learn more", value: "Tell me more about this" },
-      { label: "🗓️ What's next?", value: "What should I do next?" },
+      { label: "Learn more", value: "Tell me more about this" },
+      { label: "What's next?", value: "What should I do next?" },
     ],
   }
 
   return (
-    <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-neutral-700/50">
+    <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-white/10">
       {actions[roleId].map((action, i) => (
         <button
           key={i}
           onClick={() => onAction(action.value)}
-          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-neutral-700/50 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-all duration-200 border border-neutral-600/50"
+          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/5 backdrop-blur-md hover:bg-white/10 text-neutral-300 hover:text-white transition-all duration-200 border border-white/10"
         >
           {action.label}
         </button>
@@ -225,10 +225,10 @@ function ChatMessage({
         </div>
       )}
       <div className={cn(
-        "max-w-[85%] rounded-2xl px-4 py-3 text-sm",
+        "max-w-[85%] rounded-2xl px-4 py-3 text-sm backdrop-blur-md border",
         isUser
-          ? `${roleConfig.bgColor} text-white`
-          : "bg-neutral-800 text-neutral-300"
+          ? `${roleConfig.bgColor} text-white border-white/20`
+          : "bg-white/5 text-neutral-300 border-white/10"
       )}>
         {isUser ? (
           <>
@@ -238,7 +238,7 @@ function ChatMessage({
         ) : (
           <>
             {/* Friendly greeting */}
-            <p className="text-xs font-medium text-blue-400 mb-2">✨ {getGreeting()}</p>
+            <p className="text-xs font-medium text-blue-400 mb-2">{getGreeting()}</p>
 
             {/* Main content */}
             <div className="space-y-1">{renderContent(message.content)}</div>
@@ -380,11 +380,11 @@ export function AI_Prompt({ className }: AIInputProps) {
 
   return (
     <div className={cn("w-full max-w-3xl mx-auto", className)}>
-      <div className="relative bg-neutral-900 rounded-2xl border border-neutral-700/50 overflow-hidden shadow-2xl shadow-black/50">
+      <div className="relative bg-neutral-900/60 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/50">
         {/* Header with role tabs */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 backdrop-blur-sm">
           {/* Role Tabs */}
-          <div className="flex items-center gap-1 p-1 rounded-lg bg-neutral-800/50">
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-white/5 backdrop-blur-md border border-white/10">
             {roleConfigs.map((role) => (
               <button
                 key={role.id}
@@ -399,7 +399,7 @@ export function AI_Prompt({ className }: AIInputProps) {
                 {activeRole === role.id && (
                   <motion.div
                     layoutId="active-role-tab"
-                    className="absolute inset-0 rounded-md bg-neutral-700/80"
+                    className="absolute inset-0 rounded-md bg-white/10 backdrop-blur-md"
                     transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
                   />
                 )}
@@ -442,10 +442,10 @@ export function AI_Prompt({ className }: AIInputProps) {
               >
                 <h3 className="text-white font-medium mb-2 text-lg">
                   {currentRole.id === "clinic"
-                    ? "👋 Hey there! I'm Atlas, your clinic intelligence partner."
+                    ? "Hi! I'm Atlas, your clinic intelligence partner."
                     : currentRole.id === "provider"
-                    ? "👋 Hi! I'm Atlas, here to help you provide exceptional care."
-                    : "👋 Welcome! I'm Atlas, your personal peptide guide."}
+                    ? "Hi! I'm Atlas, here to help you provide exceptional care."
+                    : "Welcome! I'm Atlas, your personal peptide guide."}
                 </h3>
                 <p className="text-neutral-400 text-sm max-w-md mb-4 leading-relaxed">
                   {currentRole.id === "clinic"
@@ -454,7 +454,7 @@ export function AI_Prompt({ className }: AIInputProps) {
                     ? "I'm here to assist with protocols, dosing guidance, and patient care decisions. How can I help today?"
                     : "I'll help you understand your treatment, answer questions about peptides, and guide you through your wellness journey. What's on your mind?"}
                 </p>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-800/50 border border-neutral-700/50">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10">
                   <Sparkles className={cn("h-3 w-3", currentRole.color)} strokeWidth={1.5} />
                   <span className="text-xs text-neutral-500">Try a question below to get started</span>
                 </div>
@@ -484,7 +484,7 @@ export function AI_Prompt({ className }: AIInputProps) {
         </div>
 
         {/* Suggested Prompts */}
-        <div className="px-4 py-3 border-t border-neutral-800/50">
+        <div className="px-4 py-3 border-t border-white/10 backdrop-blur-sm bg-white/5">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeRole}
@@ -494,7 +494,7 @@ export function AI_Prompt({ className }: AIInputProps) {
               transition={{ duration: 0.2 }}
               className="flex flex-wrap items-center gap-2"
             >
-              <span className="text-xs text-neutral-500 font-medium">💡 Popular questions:</span>
+              <span className="text-xs text-neutral-500 font-medium">Popular questions:</span>
               {currentRole.prompts.map((prompt, index) => (
                 <button
                   key={index}
@@ -502,9 +502,8 @@ export function AI_Prompt({ className }: AIInputProps) {
                   disabled={isLoading}
                   className={cn(
                     "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200",
-                    "bg-neutral-800/50 border",
-                    currentRole.borderColor,
-                    "hover:bg-neutral-800 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed",
+                    "bg-white/5 backdrop-blur-md border border-white/10",
+                    "hover:bg-white/10 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed",
                     currentRole.color
                   )}
                 >
@@ -516,7 +515,7 @@ export function AI_Prompt({ className }: AIInputProps) {
         </div>
 
         {/* Input Area */}
-        <div className="px-4 py-3 border-t border-neutral-800 bg-neutral-900/50">
+        <div className="px-4 py-3 border-t border-white/10 bg-white/5 backdrop-blur-md">
           <div className="flex items-end gap-3">
             <Textarea
               ref={textareaRef}
@@ -526,7 +525,7 @@ export function AI_Prompt({ className }: AIInputProps) {
               placeholder={currentRole.placeholder}
               disabled={isLoading}
               className={cn(
-                "flex-1 bg-neutral-800/50 border border-neutral-700/50 rounded-xl resize-none text-white placeholder:text-neutral-500 focus:ring-1 focus:border-transparent text-sm py-3 px-4 min-h-[48px] max-h-[120px]",
+                "flex-1 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl resize-none text-white placeholder:text-neutral-500 focus:ring-1 focus:border-transparent text-sm py-3 px-4 min-h-[48px] max-h-[120px]",
                 `focus:ring-${currentRole.id === "clinic" ? "gray" : currentRole.id === "provider" ? "blue" : "red"}-500/50`
               )}
               rows={1}

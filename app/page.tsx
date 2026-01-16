@@ -424,13 +424,13 @@ export default function HomePage() {
               <Sparkles className="h-4 w-4 text-neutral-300" strokeWidth={1.5} />
               <span className="text-sm font-medium text-neutral-300">Introducing Atlas AI</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extralight text-white mb-2 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-extralight text-white mb-2 tracking-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
               Intelligence That's Yours
             </h2>
-            <p className="text-neutral-300 text-lg font-medium mb-3">
-              Map out your health!!
+            <p className="text-neutral-300 text-lg font-medium mb-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              Map out your health
             </p>
-            <p className="text-neutral-400 text-base max-w-xl mx-auto font-light">
+            <p className="text-neutral-400 text-base max-w-xl mx-auto font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
               Powered by your data. Protected by design. Perfected for you.
             </p>
           </div>

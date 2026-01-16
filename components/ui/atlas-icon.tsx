@@ -22,16 +22,16 @@ export function AtlasIcon({ className, size = 80 }: AtlasIconProps) {
       <defs>
         {/* Premium gradient */}
         <linearGradient id="globe-grad" x1="20%" y1="0%" x2="80%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#22d3ee', stopOpacity: 1 }} />
-          <stop offset="50%" style={{ stopColor: '#06b6d4', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#0891b2', stopOpacity: 1 }} />
+          <stop offset="0%" style={{ stopColor: '#60A5FA', stopOpacity: 1 }} />
+          <stop offset="50%" style={{ stopColor: '#3B82F6', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#2563EB', stopOpacity: 1 }} />
         </linearGradient>
 
         {/* Radial gradient for depth */}
         <radialGradient id="sphere-depth">
-          <stop offset="0%" style={{ stopColor: '#22d3ee', stopOpacity: 0.3 }} />
-          <stop offset="70%" style={{ stopColor: '#06b6d4', stopOpacity: 0.1 }} />
-          <stop offset="100%" style={{ stopColor: '#0891b2', stopOpacity: 0 }} />
+          <stop offset="0%" style={{ stopColor: '#60A5FA', stopOpacity: 0.3 }} />
+          <stop offset="70%" style={{ stopColor: '#3B82F6', stopOpacity: 0.1 }} />
+          <stop offset="100%" style={{ stopColor: '#2563EB', stopOpacity: 0 }} />
         </radialGradient>
 
         {/* Soft glow */}
@@ -101,7 +101,7 @@ export function AtlasIcon({ className, size = 80 }: AtlasIconProps) {
       </g>
 
       {/* Data points (representing health data nodes) */}
-      <g fill="#22d3ee" opacity="0.8">
+      <g fill="#60A5FA" opacity="0.8">
         <circle cx="42" cy="35" r="2" />
         <circle cx="58" cy="32" r="2" />
         <circle cx="35" cy="50" r="2" />
@@ -111,7 +111,7 @@ export function AtlasIcon({ className, size = 80 }: AtlasIconProps) {
       </g>
 
       {/* Connecting lines between data points (neural network style) */}
-      <g stroke="#22d3ee" strokeWidth="0.8" opacity="0.3">
+      <g stroke="#60A5FA" strokeWidth="0.8" opacity="0.3">
         <line x1="42" y1="35" x2="58" y2="32" />
         <line x1="42" y1="35" x2="35" y2="50" />
         <line x1="58" y1="32" x2="65" y2="48" />
@@ -122,7 +122,7 @@ export function AtlasIcon({ className, size = 80 }: AtlasIconProps) {
       {/* Medical cross integrated into center */}
       <g opacity="0.9">
         {/* Cross background circle */}
-        <circle cx="50" cy="50" r="8" fill="#0891b2" opacity="0.3" />
+        <circle cx="50" cy="50" r="8" fill="#2563EB" opacity="0.3" />
 
         {/* Vertical bar */}
         <rect
@@ -131,7 +131,7 @@ export function AtlasIcon({ className, size = 80 }: AtlasIconProps) {
           width="3"
           height="12"
           rx="1"
-          fill="#22d3ee"
+          fill="#60A5FA"
         />
 
         {/* Horizontal bar */}
@@ -141,7 +141,7 @@ export function AtlasIcon({ className, size = 80 }: AtlasIconProps) {
           width="12"
           height="3"
           rx="1"
-          fill="#22d3ee"
+          fill="#60A5FA"
         />
 
         {/* Subtle outline for definition */}
@@ -182,7 +182,7 @@ export function AtlasIcon({ className, size = 80 }: AtlasIconProps) {
       {/* Subtle shadow arc (bottom) */}
       <path
         d="M 55 77 Q 60 76 65 73"
-        stroke="#0891b2"
+        stroke="#2563EB"
         strokeWidth="1.5"
         strokeLinecap="round"
         opacity="0.2"

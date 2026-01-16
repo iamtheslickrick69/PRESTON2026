@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: "Bridge MDX",
     images: [
       {
-        url: "/og-image.png",
+        url: "/new.png",
         width: 1200,
         height: 630,
         alt: "Bridge MDX - Intelligence-first peptide care platform",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Bridge MDX | Intelligence-First Peptide Care",
     description: "Where AI meets clinical expertise. Providers get data-driven protocols. Patients get answers they understand.",
-    images: ["/og-image.png"],
+    images: ["/new.png"],
   },
 }
 
