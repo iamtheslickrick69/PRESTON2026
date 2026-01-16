@@ -1,10 +1,11 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono, Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { AuthProvider } from "@/lib/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { FloatingChatWidget } from "@/components/ui/floating-chat-widget"
 import { Suspense } from "react"
 import "./globals.css"
 
@@ -18,10 +19,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+})
+
 export const metadata: Metadata = {
   title: "Peptide EHR System",
   description: "Electronic health records management for peptide therapy clinics",
   generator: "v0.app",
+  icons: {
+    icon: "/bridge-ai-icon.png",
+    shortcut: "/bridge-ai-icon.png",
+    apple: "/bridge-ai-icon.png",
+  },
 }
 
 export default function RootLayout({
@@ -30,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"
@@ -42,6 +54,7 @@ export default function RootLayout({
             <AuthProvider>{children}</AuthProvider>
           </Suspense>
           <Toaster />
+          <FloatingChatWidget />
         </ThemeProvider>
         <Analytics />
       </body>

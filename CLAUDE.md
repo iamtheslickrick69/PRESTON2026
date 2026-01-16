@@ -1,20 +1,21 @@
-# CLAUDE.md - PRESTON Development Guide
+# CLAUDE.md - PRESTON2026 Development Guide
 
 ## Project Overview
 
-**PRESTON** is a specialized Electronic Health Records (EHR) SaaS platform for peptide therapy clinics. It's a three-sided marketplace connecting:
+**PRESTON2026** (Bridge MDX) is a specialized Electronic Health Records (EHR) SaaS platform for peptide therapy clinics. It's a three-sided marketplace connecting:
 
-1. **Clinic Admins** - Manage providers, patients, billing, analytics
+1. **Clinic** - Manage providers, patients, billing, analytics
 2. **Providers** - Nurse Practitioners, PAs, Chiropractors managing patient treatments
 3. **Patients** - Order peptides, track treatments, schedule appointments
+
+**Tagline:** "Intelligence-first peptide care."
 
 ---
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/iamtheslickrick69/preston.git
-cd preston
+cd PRESTON2026
 npm install --legacy-peer-deps
 npm run dev
 # Open http://localhost:3000
@@ -32,9 +33,11 @@ The application is a **frontend-only prototype** built with:
 | React | 19.1.0 | UI library |
 | TypeScript | 5.x | Type safety (strict mode) |
 | Tailwind CSS | 4.1.9 | Styling |
+| Framer Motion | Latest | Animations |
 | Radix UI + shadcn/ui | Latest | 60+ UI components |
 | React Hook Form + Zod | Latest | Form validation |
 | Recharts | Latest | Data visualization |
+| Lucide React | Latest | Icons |
 
 ### Critical Limitations
 
@@ -48,10 +51,81 @@ The application is a **frontend-only prototype** built with:
 
 ---
 
+## Design System
+
+### Brand Colors (Role-Based)
+
+| Role | Primary | Background | Badge |
+|------|---------|------------|-------|
+| Clinic | Gray-400 | Gray-700/50 | Gray-700/50 |
+| Provider | Cyan-400 | Cyan-900/50 | Cyan-900/50 |
+| Patient | Rose-400 | Rose-900/50 | Rose-900/50 |
+
+### Visual Language
+
+- **Dashed borders** for card containers and grids
+- **Dark theme** (neutral-900 base) for main site
+- **Light theme** (white) for Features section
+- **Subtle gradients** for emphasis (cyan-950/30 for CTAs)
+- **PixelCanvas animations** on hover for feature cards
+
+### Typography
+
+- Headlines: `font-extralight` for premium feel
+- Body: `font-light` to `font-medium`
+- Badges: `text-xs` or `text-[10px]`
+
+---
+
+## Homepage Structure
+
+The landing page (`app/page.tsx`) has these sections:
+
+1. **Header** - Fixed nav with logo, navigation, Sign In/Get Started
+2. **Hero Section**
+   - Headline: "Intelligence-first peptide care."
+   - Subtitle explaining value prop
+   - Two-card layout:
+     - **Member Login** (left) - Role-based tabs for Clinic/Provider/Patient
+     - **Start Your Clinic** (right) - Primary CTA with trust badges
+3. **AI Section** - Three role cards showcasing Bridge AI capabilities
+4. **Features Section** - Role-filtered feature grid (light theme)
+5. **Why Bridge MDX** - Accordion with differentiators
+6. **Blog Section** - Card stack with articles
+7. **CTA Section** - Final conversion block
+8. **Footer**
+
+---
+
+## Key Components
+
+### Custom Components Created
+
+| Component | Path | Purpose |
+|-----------|------|---------|
+| `PixelCanvas` | `/components/ui/pixel-canvas.tsx` | Hover animation with colored pixels |
+| `FloatingChatWidget` | `/components/ui/floating-chat-widget.tsx` | Bottom-right AI chat popup |
+| `AnimatedAIInput` | `/components/ui/animated-ai-input.tsx` | AI chatbot interface with custom icon |
+| `AnimatedTabs` | `/components/ui/animated-tabs.tsx` | Role-based login tabs |
+| `FeatureCard` | `/components/ui/grid-feature-cards.tsx` | Feature cards with PixelCanvas |
+| `BlogCardStack` | `/components/blog-card-stack.tsx` | Stacked blog cards with modal |
+| `BlogModal` | `/components/blog-modal.tsx` | Full article reader modal |
+| `DigitalSerenity` | `/components/ui/digital-serenity-animated-landing-page.tsx` | Animated background |
+
+### Assets
+
+| Asset | Path | Purpose |
+|-------|------|---------|
+| Logo | `/public/bridgeicon.png` | Main logo |
+| AI Icon | `/public/bridge-ai-icon.png` | Custom medical cross + EKG icon for AI |
+| Favicon | `/public/bridge-ai-icon.png` | Browser tab icon |
+
+---
+
 ## Directory Structure
 
 ```
-preston/
+PRESTON2026/
 ├── app/                          # Next.js App Router pages
 │   ├── auth/                     # Login/register pages
 │   │   ├── clinic-login/
@@ -84,228 +158,198 @@ preston/
 │   │   ├── schedule/
 │   │   └── shop/
 │   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx                  # Landing page
+│   ├── layout.tsx                # Root layout with favicon
+│   └── page.tsx                  # Landing page (main focus)
 ├── components/
-│   ├── ui/                       # shadcn/ui primitives (60+ components)
-│   ├── dashboard-layout.tsx      # Main layout wrapper with sidebar
-│   ├── protected-route.tsx       # Role-based route protection
+│   ├── ui/                       # UI components
+│   │   ├── pixel-canvas.tsx      # Hover animation component
+│   │   ├── floating-chat-widget.tsx
+│   │   ├── animated-ai-input.tsx
+│   │   ├── animated-tabs.tsx
+│   │   ├── grid-feature-cards.tsx
+│   │   └── ... (60+ shadcn components)
+│   ├── blog-card-stack.tsx
+│   ├── blog-modal.tsx
+│   ├── dashboard-layout.tsx
+│   ├── protected-route.tsx
 │   └── theme-provider.tsx
 ├── lib/
-│   ├── auth-context.tsx          # Mock authentication context
-│   └── utils.ts                  # Helper functions (cn for classnames)
+│   ├── auth-context.tsx          # Mock authentication
+│   └── utils.ts                  # cn() helper
 ├── hooks/
 │   ├── use-mobile.ts
 │   └── use-toast.ts
-├── public/                       # Static assets (logos, peptide images)
+├── public/
+│   ├── bridgeicon.png            # Logo
+│   ├── bridge-ai-icon.png        # AI icon (favicon + chat)
+│   └── ... (images)
 └── styles/
     └── globals.css
 ```
 
 ---
 
-## Key Files to Understand
+## User Roles & Permissions
 
-| File | Purpose |
-|------|---------|
-| `lib/auth-context.tsx` | Mock auth with roles: `clinic_admin`, `provider`, `patient` |
-| `components/protected-route.tsx` | Route protection by role |
-| `components/dashboard-layout.tsx` | Sidebar navigation per role |
-| `app/patient/peptides/page.tsx` | Full peptide catalog (70+ items) |
-| `app/clinic/analytics/page.tsx` | Analytics dashboard with charts |
-| `app/clinic/billing/page.tsx` | Revenue and transaction tracking |
+| Role | Label | Can Access | Color |
+|------|-------|------------|-------|
+| `clinic_admin` | Clinic | `/clinic/*` | Gray |
+| `provider` | Provider | `/provider/*` | Cyan |
+| `patient` | Patient | `/patient/*` | Rose |
 
 ---
 
-## User Roles & Permissions
+## Bridge AI
 
-| Role | Can Access | Cannot Access |
-|------|------------|---------------|
-| `clinic_admin` | `/clinic/*` | `/provider/*`, `/patient/*` |
-| `provider` | `/provider/*` | `/clinic/*`, `/patient/*` |
-| `patient` | `/patient/*` | `/clinic/*`, `/provider/*` |
+The AI assistant is available via:
+
+1. **Floating Widget** - Bottom-right chat bubble (always visible)
+2. **Homepage Section** - Role cards showcasing capabilities
+
+### AI Features by Role
+
+| Role | Capabilities |
+|------|-------------|
+| Clinic | Revenue forecasting, provider scheduling, compliance monitoring |
+| Provider | Smart calculators, drug interactions, treatment recommendations |
+| Patient | Treatment explanations, side effect guidance, injection instructions |
+
+### Triggering the Chat Widget
+
+```tsx
+// Open the chat widget from anywhere
+window.dispatchEvent(new CustomEvent("open-chat-widget"))
+```
 
 ---
 
 ## Coding Conventions
 
-### TypeScript
-- Strict mode enabled
-- Use proper types (no `any`)
-- Define interfaces for all data structures
-
-### Components
-- Functional components with hooks
-- Use shadcn/ui primitives from `/components/ui/`
-- Check if component exists before creating new ones
-
-### Naming Conventions
-
-| Type | Convention | Example |
-|------|------------|---------|
-| Files | kebab-case | `dashboard-layout.tsx` |
-| Components | PascalCase | `DashboardLayout` |
-| Hooks | use-kebab-case | `use-mobile.ts` |
-| Types/Interfaces | PascalCase | `PatientRecord` |
-| Variables | camelCase | `patientData` |
-| Constants | SCREAMING_SNAKE | `MAX_RETRY_COUNT` |
-
-### Import Order
+### Component Pattern
 
 ```tsx
-// 1. React/Next.js
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+"use client"
 
-// 2. External packages
-import { zodResolver } from "@hookform/resolvers/zod"
-
-// 3. Internal components
-import { Button } from "@/components/ui/button"
-import { DashboardLayout } from "@/components/dashboard-layout"
-
-// 4. Lib/utils
 import { cn } from "@/lib/utils"
-import { useAuth } from "@/lib/auth-context"
 
-// 5. Types
-import type { Patient } from "@/types"
+interface MyComponentProps {
+  className?: string
+  // ... props
+}
+
+export function MyComponent({ className, ...props }: MyComponentProps) {
+  return (
+    <div className={cn("base-classes", className)} {...props}>
+      {/* content */}
+    </div>
+  )
+}
 ```
 
-### Styling
-- Tailwind CSS only
-- Use `cn()` utility for conditional classes
-- Follow existing color/spacing patterns
+### PixelCanvas Usage
 
-### Forms
-- React Hook Form for form state
-- Zod schemas for validation
-- Keep schemas co-located with forms
+```tsx
+import { PixelCanvas } from "@/components/ui/pixel-canvas"
 
-### State Management
-- `AuthContext` for authentication state
-- `useState`/`useReducer` for local component state
-- Create new contexts in `/lib/` when global state needed
+// Inside a card with overflow-hidden
+<div className="relative overflow-hidden">
+  <PixelCanvas
+    gap={10}           // Space between pixels
+    speed={20}         // Animation speed
+    colors={["#color1", "#color2", "#color3"]}
+    variant="default"  // or "icon"
+    noFocus           // Disable focus events
+  />
+  <div className="relative z-10">
+    {/* Card content */}
+  </div>
+</div>
+```
 
-### Error Handling
-- Use `sonner` for toast notifications
-- Display errors via toast for user actions
-- Console errors for debugging only
+### Styling Patterns
+
+```tsx
+// Dashed border container
+<div className="border border-dashed border-neutral-700 rounded-xl">
+
+// Trust badge with checkmark
+<div className="flex items-center gap-1.5">
+  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" strokeWidth={2} />
+  <span className="text-xs text-neutral-300">HIPAA Compliant</span>
+</div>
+
+// CTA button with glow
+<Button className="bg-cyan-500 hover:bg-cyan-400 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40">
+  Get Started
+</Button>
+```
 
 ---
 
 ## Mock Data Locations
 
-All data is hardcoded inline. Key locations:
-
 | Data Type | Location |
 |-----------|----------|
 | Peptide catalog (~70 items) | `/app/patient/peptides/page.tsx` |
+| Blog posts | `/components/blog-card-stack.tsx` |
+| Role features | `/app/page.tsx` (roleFeatures object) |
 | Provider list | `/app/clinic/providers/page.tsx` |
 | Patient list | `/app/provider/patients/page.tsx` |
-| Transactions | `/app/clinic/billing/page.tsx` |
-| Analytics data | `/app/clinic/analytics/page.tsx` |
 
 ---
 
 ## Common Commands
 
 ```bash
-npm install --legacy-peer-deps  # Install dependencies (peer dep conflicts with React 19)
-npm run dev                      # Start dev server (localhost:3000)
+npm install --legacy-peer-deps  # Install (React 19 peer deps)
+npm run dev                      # Dev server (localhost:3000)
 npm run build                    # Production build
-npm run lint                     # Run ESLint
-```
-
----
-
-## Environment Variables
-
-Currently none required. When backend is added:
-
-```bash
-# .env.local
-DATABASE_URL=postgresql://...
-NEXTAUTH_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000
-
-# Stripe (for payments)
-STRIPE_SECRET_KEY=sk_...
-STRIPE_PUBLISHABLE_KEY=pk_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-
-# External APIs
-LABCORP_API_KEY=
-QUEST_API_KEY=
+npm run lint                     # ESLint
 ```
 
 ---
 
 ## What Needs to Be Built
 
-### Phase 1: Backend Foundation (Critical)
-1. Database schema (PostgreSQL) - Users, Clinics, Providers, Patients, Peptides, Orders
-2. API routes in `/app/api/` - RESTful endpoints for all CRUD operations
-3. Real authentication - Replace localStorage mock with NextAuth/Clerk
-4. Data fetching - Replace hardcoded data with API calls
+### Phase 1: Backend Foundation
+1. Database schema (PostgreSQL)
+2. API routes in `/app/api/`
+3. Real authentication (NextAuth/Clerk)
+4. Data fetching layer
 
 ### Phase 2: Core Features
-5. Payment integration (Stripe Connect for marketplace)
-6. Order management system
-7. Appointment scheduling with calendar integration
-8. File upload for patient documents
+5. Payment integration (Stripe Connect)
+6. Order management
+7. Appointment scheduling
+8. File uploads
 
-### Phase 3: Compliance (Healthcare)
+### Phase 3: Compliance
 9. HIPAA audit logging
-10. Data encryption at rest
-11. Role-based API authorization
-12. Session management with timeout
+10. Data encryption
+11. Role-based API auth
+12. Session management
 
 ---
 
-## Business Model Context
+## Business Model
 
 - **SaaS fees** from clinics (subscription)
 - **Transaction fees** on peptide orders (12% take rate)
-- **70+ peptides** across 11 categories ($45-$525 price range)
-- Categories: Healing & Recovery, Growth Hormone, Weight Management, Cognitive Enhancement, Anti-Aging, Sexual Health, Sleep & Recovery, Peptide Blends
+- **70+ peptides** across 11 categories ($45-$525)
 
 ---
 
-## When Making Changes
+## Recent Changes (January 2026)
 
-1. **Check `/components/ui/`** before creating new components
-2. **Follow existing patterns** in similar pages
-3. **Use Zod schemas** for any form validation
-4. **Add TypeScript types** for all new data structures
-5. **Test all three user roles** when changing shared components
-6. **Keep peptide data centralized** when refactoring
-7. **Don't commit `.env` files** - add to `.gitignore`
-
----
-
-## Git Workflow
-
-```bash
-# Branch naming
-feature/add-patient-search
-fix/auth-redirect-loop
-chore/update-dependencies
-
-# Commit messages
-feat: add patient search functionality
-fix: resolve auth redirect loop
-docs: update README with setup instructions
-```
+- Rebranded from "PRESTON" to "Bridge MDX"
+- Added custom AI icon (medical cross + EKG)
+- Created floating chat widget for AI assistant
+- Redesigned homepage with two-card hero layout
+- Implemented PixelCanvas hover animations
+- Added trust badges to Start Your Clinic card
+- Unified design system with dashed borders
+- Changed "Clinic Admin" to "Clinic" throughout
 
 ---
 
-## Related Documentation
-
-- `PRD.md` - Full product requirements and vision (see separate file)
-- [shadcn/ui docs](https://ui.shadcn.com/) - Component library reference
-- [Next.js App Router](https://nextjs.org/docs/app) - Routing documentation
-
----
-
-*Last updated: December 2024*
+*Last updated: January 2026*

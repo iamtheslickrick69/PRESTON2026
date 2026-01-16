@@ -136,11 +136,11 @@ export function DashboardLayout({ children, navigation: propNavigation }: Dashbo
             </Button>
             <Link href="/" className="flex items-center">
               <Image
-                src="/images/design-mode/brandmark-design.png"
+                src="/bridgeicon.png"
                 alt="Bridge MDX"
                 width={198}
                 height={40}
-                className="h-[37px] w-auto ml-[5px] cursor-pointer hover:opacity-80 transition-opacity"
+                className="h-[37px] w-auto cursor-pointer hover:opacity-80 transition-opacity"
                 priority
               />
             </Link>
