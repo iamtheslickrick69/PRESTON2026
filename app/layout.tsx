@@ -26,13 +26,35 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Peptide EHR System",
-  description: "Electronic health records management for peptide therapy clinics",
+  title: "Bridge MDX | Intelligence-First Peptide Care",
+  description: "Where AI meets clinical expertise. Providers get data-driven protocols. Patients get answers they understand. The only peptide therapy EHR with built-in AI intelligence.",
   generator: "v0.app",
   icons: {
     icon: "/bridge-ai-icon.png",
     shortcut: "/bridge-ai-icon.png",
     apple: "/bridge-ai-icon.png",
+  },
+  openGraph: {
+    title: "Bridge MDX | Intelligence-First Peptide Care",
+    description: "Where AI meets clinical expertise. Providers get data-driven protocols. Patients get answers they understand.",
+    url: "https://mdx.haestus.dev",
+    siteName: "Bridge MDX",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Bridge MDX - Intelligence-first peptide care platform",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bridge MDX | Intelligence-First Peptide Care",
+    description: "Where AI meets clinical expertise. Providers get data-driven protocols. Patients get answers they understand.",
+    images: ["/og-image.png"],
   },
 }
 
